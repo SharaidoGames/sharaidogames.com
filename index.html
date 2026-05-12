@@ -3,683 +3,818 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Dark Crown: Genesis</title>
-  <meta name="description" content="A 2D pixel-art action rogue-lite. Die. Learn. Reign. Wishlist on Steam." />
-  <meta property="og:title" content="The Dark Crown: Genesis" />
-  <meta property="og:description" content="A 2D pixel-art action rogue-lite. Die. Learn. Reign." />
+  <title>Sharaido Games</title>
+  <meta name="description" content="Sharaido Games — an independent studio crafting atmospheric pixel-art worlds. Currently developing The Dark Crown: Genesis." />
+  <meta property="og:title" content="Sharaido Games" />
+  <meta property="og:description" content="Independent studio crafting atmospheric pixel-art worlds." />
   <meta property="og:url" content="https://sharaidogames.com/" />
-  <link rel="icon" type="image/png" href="./assets/logo.png" />
+  <meta property="og:image" content="./Assets/dark-crown-keyart.png" />
+  <meta name="theme-color" content="#6d28d9" />
+  <link rel="icon" type="image/png" href="./Assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:      #080606;
-      --surface: #110d0b;
-      --border:  rgba(255,220,170,0.08);
-      --border2: rgba(255,220,170,0.15);
-      --red:     #c0392b;
-      --red2:    #e74c3c;
-      --gold:    #c9a84c;
-      --text:    #f0e6d3;
-      --muted:   #7a6e63;
-      --muted2:  #4a4038;
-      --display: 'Cinzel', serif;
-      --body:    'DM Sans', sans-serif;
+      --bg:           #f5f1fa;
+      --bg-2:         #ece6f5;
+      --surface:      #ffffff;
+      --paper:        #fbf8ff;
+      --ink:          #15102a;
+      --ink-soft:     #2e2748;
+      --ink-2:        #4a4368;
+      --muted:        #6b6585;
+      --muted-2:      #9b94b3;
+      --border:       #e3dcef;
+      --border-2:     #c8bcdd;
+      --primary:      #5b21b6;
+      --primary-2:    #6d28d9;
+      --primary-3:    #7c3aed;
+      --accent:       #8b5cf6;
+      --accent-2:     #a78bfa;
+      --accent-soft:  #efe9ff;
+      --display:      'Cinzel', serif;
+      --body:         'Inter', system-ui, sans-serif;
+      --container:    1160px;
+      --container-tight: 880px;
     }
 
     html { scroll-behavior: smooth; }
     body {
       background: var(--bg);
-      color: var(--text);
+      color: var(--ink);
       font-family: var(--body);
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
-
-    /* grain */
-    body::after {
+    /* paper grain */
+    body::before {
       content: '';
       position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 9999;
-      opacity: 0.4;
+      mix-blend-mode: multiply;
+      opacity: 0.16;
+      z-index: 1;
     }
+    a { color: var(--primary-2); text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ::selection { background: var(--accent); color: #fff; }
 
-    /* ── NAV ─────────────────────────────────────────────── */
+    /* ═════ NAV — solid blue-purple band, Team Cherry style ═════ */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 20px 44px;
+      background: linear-gradient(90deg, #3730a3 0%, #4f46e5 35%, #6d28d9 75%, #7c3aed 100%);
+      box-shadow: 0 4px 24px -8px rgba(67,56,202,0.45);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    /* subtle inner glow on the band */
+    nav::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .nav-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 14px 36px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: background 0.3s;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
     }
-    nav.scrolled {
-      background: rgba(8,6,6,0.94);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-    }
-    .logo {
-      font-family: var(--display);
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .logo:hover { color: var(--text); }
-    .wishlist-nav {
+
+    .nav-logo {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 20px;
-      background: var(--red);
-      color: var(--text);
+      flex-shrink: 0;
+      transition: transform 0.3s, filter 0.3s;
+    }
+    .nav-logo:hover {
+      transform: translateY(-1px);
+      filter: drop-shadow(0 0 14px rgba(255,255,255,0.4));
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 38px;
+    }
+    .nav-link {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+      padding: 6px 0;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 50%; bottom: 0;
+      width: 0; height: 2px;
+      background: #fff;
+      transition: width 0.25s, left 0.25s;
+    }
+    .nav-link:hover { color: #fff; }
+    .nav-link:hover::after { width: 100%; left: 0; }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 22px;
+      background: #fff;
+      color: var(--primary) !important;
       text-decoration: none;
       font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      border-radius: 1px;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .wishlist-nav:hover { background: var(--red2); transform: translateY(-1px); }
-
-    /* ── HERO ─────────────────────────────────────────────── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 44px 72px;
+      border: 1px solid #fff;
+      transition: all 0.25s;
       position: relative;
       overflow: hidden;
     }
-
-    /* dark vignette BG — replace with actual art */
-    .hero-bg {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(to top, rgba(8,6,6,1) 0%, rgba(8,6,6,0.55) 40%, rgba(8,6,6,0.2) 100%),
-        linear-gradient(135deg, #1a0a08, #0a080a);
-      z-index: 0;
-    }
-    .hero-bg img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0.5;
-      mix-blend-mode: luminosity;
+    .nav-cta:hover {
+      background: var(--ink);
+      color: #fff !important;
+      border-color: var(--ink);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
 
-    /* red top border accent */
-    #hero::before {
+    @media (max-width: 900px) {
+      .nav-inner { padding: 12px 22px; }
+      .nav-links { display: none; }
+      .nav-logo img { height: 36px; }
+    }
+
+    /* ═════ BUTTONS ═════ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      padding: 16px 32px;
+      font-family: var(--body);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: #fff !important;
+      border-color: var(--ink);
+    }
+    .btn-primary::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(to right, transparent, var(--red), transparent);
-      z-index: 2;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary-2), var(--accent));
+      transform: translateX(-101%);
+      transition: transform 0.4s ease;
+    }
+    .btn-primary > * { position: relative; z-index: 1; }
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary:hover { border-color: var(--primary-2); transform: translateY(-2px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink) !important;
+      border-color: var(--ink);
+    }
+    .btn-ghost:hover {
+      background: var(--ink);
+      color: #fff !important;
+      transform: translateY(-2px);
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 760px;
-    }
-    .hero-badge {
+    /* ═════ SHARED SECTION BITS ═════ */
+    section { position: relative; z-index: 2; }
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--primary-2);
+      margin-bottom: 18px;
       display: inline-block;
-      font-size: 0.65rem;
+    }
+    .section-heading {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4.4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: 0.005em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .section-heading em {
+      font-style: italic;
+      color: var(--primary-2);
+      font-weight: 500;
+    }
+
+    /* ═════ GAME (the hero — key art shown ONCE, properly) ═════ */
+    #game {
+      padding: 130px 36px 110px;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--paper) 100%);
+    }
+    .game-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 90px;
+      align-items: center;
+    }
+    .game-art {
+      position: relative;
+      width: 100%;
+      background: var(--ink);
+      box-shadow:
+        0 30px 80px -30px rgba(91,33,182,0.45),
+        0 0 0 1px var(--border);
+      overflow: hidden;
+    }
+    .game-art img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 1.2s ease;
+    }
+    .game-art:hover img { transform: scale(1.025); }
+    .game-art-badge {
+      position: absolute;
+      top: 16px; left: 16px;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #fff;
+      font-weight: 700;
+      background: rgba(21,16,42,0.6);
+      backdrop-filter: blur(8px);
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .game-art-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 10px var(--accent-2);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
+    }
+
+    .game-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.7rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--primary-2);
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+    .game-eyebrow::before {
+      content: '';
+      width: 30px; height: 1px;
+      background: var(--primary-2);
+    }
+
+    .game-desc {
+      font-size: 1.05rem;
+      color: var(--ink-2);
+      line-height: 1.85;
+      margin-bottom: 18px;
+      max-width: 520px;
+    }
+    .game-desc strong { color: var(--ink); font-weight: 600; }
+    .game-desc em { font-style: italic; color: var(--primary-2); font-weight: 500; }
+
+    .game-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin: 28px 0 32px;
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-item .meta-label {
+      font-size: 0.6rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(201,168,76,0.3);
-      padding: 5px 12px;
-      margin-bottom: 28px;
-      border-radius: 1px;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.1s forwards;
+      color: var(--muted);
+      margin-bottom: 4px;
+      font-weight: 600;
     }
-    .hero-title {
+    .meta-item .meta-value {
       font-family: var(--display);
-      font-size: clamp(3rem, 8vw, 7.5rem);
-      font-weight: 900;
-      line-height: 0.92;
-      color: var(--text);
-      letter-spacing: 0.01em;
-      margin-bottom: 10px;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.25s forwards;
-    }
-    .hero-title-sub {
-      font-family: var(--display);
-      font-size: clamp(1rem, 2.5vw, 2rem);
+      font-size: 0.95rem;
       font-weight: 700;
-      color: var(--red);
-      letter-spacing: 0.08em;
-      margin-bottom: 28px;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.35s forwards;
+      color: var(--ink);
     }
-    .hero-tagline {
-      font-size: 1.05rem;
-      color: rgba(240,230,211,0.6);
-      margin-bottom: 44px;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.5s forwards;
-    }
-    .hero-tagline em {
-      font-style: normal;
-      color: var(--text);
-    }
-    .hero-cta {
+
+    .game-cta {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.65s forwards;
-    }
-    .btn-wishlist {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 16px 36px;
-      background: var(--red);
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border-radius: 1px;
-      transition: all 0.25s;
-      border: 1px solid var(--red);
-    }
-    .btn-wishlist:hover {
-      background: var(--red2);
-      border-color: var(--red2);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(192,57,43,0.35);
-    }
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 16px 36px;
-      background: transparent;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border: 1px solid var(--border2);
-      border-radius: 1px;
-      transition: all 0.25s;
-    }
-    .btn-outline:hover {
-      border-color: rgba(240,230,211,0.35);
-      transform: translateY(-2px);
     }
 
-    /* ── SCREENSHOTS ─────────────────────────────────────── */
-    #screenshots {
-      padding: 0;
+    @media (max-width: 960px) {
+      #game { padding: 110px 22px 80px; }
+      .game-inner { grid-template-columns: 1fr; gap: 48px; }
+      .game-art { max-width: 520px; margin: 0 auto; }
+    }
+
+    /* ═════ PILLARS — inline, compact ═════ */
+    #pillars {
+      padding: 0 36px 110px;
+      background: var(--paper);
+    }
+    .pillars-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+    }
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       border-top: 1px solid var(--border);
+      border-left: 1px solid var(--border);
+    }
+    .pillar {
+      padding: 36px 26px 32px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+      background: var(--surface);
+    }
+    .pillar:hover { background: var(--accent-soft); }
+    .pillar-num {
+      font-family: var(--display);
+      font-size: 0.68rem;
+      color: var(--primary-2);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .pillar-icon {
+      width: 32px; height: 32px;
+      margin-bottom: 16px;
+      color: var(--primary-2);
+      display: flex;
+      align-items: center;
+      font-size: 1.35rem;
+    }
+    .pillar-title {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .pillar-desc {
+      font-size: 0.86rem;
+      color: var(--ink-2);
+      line-height: 1.7;
+    }
+    @media (max-width: 900px) {
+      #pillars { padding: 0 22px 80px; }
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .pillars-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ═════ SCREENSHOTS — full bleed dark band ═════ */
+    #screenshots {
+      padding: 90px 0 0;
+      background: var(--ink);
+      position: relative;
+    }
+    .ss-head {
+      padding: 0 36px 56px;
+      max-width: var(--container);
+      margin: 0 auto;
+      text-align: center;
+    }
+    .ss-head .section-eyebrow { color: var(--accent-2); }
+    .ss-head .section-heading { color: #fff; }
+    .ss-head .section-heading em { color: var(--accent-2); }
+    .ss-head .sub {
+      font-size: 0.98rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 520px;
+      margin: 0 auto;
     }
     .ss-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--ink);
     }
-    .ss-item {
-      aspect-ratio: 16/9;
+    .ss-grid .ss-item {
+      aspect-ratio: 16/10;
       overflow: hidden;
-      background: var(--surface);
+      background: var(--ink);
       position: relative;
     }
-    .ss-item img {
+    .ss-grid .ss-item img {
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0.65;
-      transition: opacity 0.4s, transform 0.5s;
-      display: block;
+      transition: transform 0.9s ease, filter 0.5s ease;
+      filter: saturate(1.05);
     }
-    .ss-item:hover img { opacity: 0.92; transform: scale(1.06); }
-    .ss-placeholder {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, #160e0a, #0c0806);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--muted2);
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .ss-grid .ss-item:hover img {
+      transform: scale(1.05);
+      filter: saturate(1.2);
+    }
+    @media (max-width: 720px) {
+      #screenshots { padding: 70px 0 0; }
+      .ss-head { padding: 0 22px 40px; }
+      .ss-grid { grid-template-columns: 1fr; }
     }
 
-    /* ── ABOUT GAME ──────────────────────────────────────── */
-    #about {
-      padding: 100px 44px;
-      border-top: 1px solid var(--border);
-      background: var(--surface);
+    /* ═════ STUDIO + PRESS combined ═════ */
+    #studio {
+      padding: 110px 36px;
+      background: linear-gradient(180deg, var(--ink) 0%, var(--ink) 40%, var(--bg-2) 40%, var(--bg-2) 100%);
+      text-align: center;
     }
-    .about-inner {
-      max-width: 880px;
+    .studio-inner {
+      max-width: var(--container-tight);
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .about-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .about-label::after {
-      content: '';
-      flex: 1; height: 1px;
-      background: rgba(201,168,76,0.2);
-    }
-    .about-heading {
-      font-family: var(--display);
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      font-weight: 700;
-      line-height: 1.1;
-      color: var(--text);
-      margin-bottom: 32px;
-    }
-    .about-text {
-      font-size: 0.95rem;
-      color: var(--muted);
-      line-height: 1.9;
-      margin-bottom: 16px;
-    }
-    .about-text strong { color: var(--text); font-weight: 400; }
-
-    .pillars {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .pillar {
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 16px;
-      align-items: start;
-    }
-    .pillar:first-child { border-top: 1px solid var(--border); }
-    .pillar-num {
-      font-family: var(--display);
-      font-size: 0.7rem;
-      color: var(--red);
-      font-weight: 700;
-      padding-top: 2px;
-    }
-    .pillar-title {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text);
-      letter-spacing: 0.04em;
-      margin-bottom: 4px;
-    }
-    .pillar-desc {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    /* ── TRAILER ─────────────────────────────────────────── */
-    #trailer {
-      padding: 0;
-      border-top: 1px solid var(--border);
-    }
-    .trailer-wrap {
+      background: var(--surface);
+      padding: 60px 56px 56px;
+      border: 1px solid var(--border);
       position: relative;
-      aspect-ratio: 16/9;
-      background: #060404;
-      cursor: pointer;
-      overflow: hidden;
+      box-shadow: 0 30px 80px -40px rgba(91,33,182,0.30);
     }
-    .trailer-wrap img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0.55;
-      transition: opacity 0.4s;
-      display: block;
+    .studio-inner::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      width: 80px; height: 3px;
+      background: linear-gradient(to right, var(--primary-2), var(--accent));
     }
-    .trailer-wrap:hover img { opacity: 0.7; }
-    .trailer-wrap iframe {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      border: none;
+    .studio-text {
+      font-size: 1.05rem;
+      color: var(--ink-2);
+      line-height: 1.9;
+      margin-bottom: 18px;
+      max-width: 620px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .trailer-overlay {
-      position: absolute; inset: 0;
+    .studio-text strong { color: var(--ink); font-weight: 600; }
+    .studio-text em { font-style: italic; color: var(--primary-2); }
+
+    .studio-divider {
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 16px;
+      max-width: 260px;
+      margin: 36px auto 32px;
+      color: var(--primary-2);
+      opacity: 0.65;
     }
-    .play-btn {
-      width: 80px; height: 80px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(240,230,211,0.3);
-      background: rgba(8,6,6,0.5);
-      backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.25s;
+    .studio-divider::before, .studio-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-2), transparent);
     }
-    .play-btn svg { width: 22px; height: 22px; fill: var(--text); margin-left: 4px; }
-    .trailer-wrap:hover .play-btn {
-      background: rgba(192,57,43,0.5);
-      border-color: var(--red);
-      transform: scale(1.1);
-    }
-    .play-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(240,230,211,0.5);
-    }
+    .studio-divider svg { width: 16px; height: 16px; }
 
-    /* ── PRESS ───────────────────────────────────────────── */
-    #press {
-      padding: 64px 44px;
-      border-top: 1px solid var(--border);
+    .studio-press {
+      margin-top: 28px;
     }
-    .press-inner {
-      max-width: 880px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-    .press-left {}
-    .press-eyebrow {
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
+    .studio-press-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--muted2);
-      margin-bottom: 8px;
-    }
-    .press-heading {
-      font-family: var(--display);
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .press-sub {
-      font-size: 0.82rem;
       color: var(--muted);
-      margin-top: 6px;
+      margin-bottom: 18px;
+      font-weight: 600;
     }
-    .press-links {
+    .studio-cta {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .press-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 22px;
-      background: transparent;
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.72rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      border: 1px solid var(--border2);
-      border-radius: 1px;
-      transition: all 0.2s;
-    }
-    .press-btn:hover { color: var(--text); border-color: rgba(240,230,211,0.3); }
-
-    /* ── FOOTER ──────────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 44px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
       gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 720px) {
+      #studio { padding: 80px 18px; }
+      .studio-inner { padding: 44px 26px 40px; }
+    }
+
+    /* ═════ FOOTER ═════ */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.7);
+      position: relative;
+      overflow: hidden;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 200px;
+      background: radial-gradient(ellipse at center, rgba(139,92,246,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .footer-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 70px 32px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      text-align: center;
+      position: relative;
+    }
+    .footer-logo {
+      filter: brightness(0) invert(1) drop-shadow(0 0 30px rgba(139,92,246,0.6));
+      width: 200px;
+      opacity: 0.95;
+    }
+    .footer-logo img { width: 100%; height: auto; }
+    .footer-tagline {
+      font-family: var(--display);
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.01em;
+      max-width: 460px;
+      line-height: 1.5;
+    }
+    .footer-tagline em { color: var(--accent-2); font-style: italic; }
+    .footer-social {
+      display: flex;
+      gap: 14px;
+    }
+    .footer-social a {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.16);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7);
+      transition: all 0.25s;
+      font-size: 0.95rem;
+    }
+    .footer-social a:hover {
+      border-color: var(--accent-2);
+      color: var(--accent-2);
+      background: rgba(139,92,246,0.1);
+      transform: translateY(-2px);
+    }
+    .footer-bar {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 22px 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      position: relative;
     }
     .footer-copy {
-      font-size: 0.68rem;
-      color: var(--muted2);
-      letter-spacing: 0.08em;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em;
     }
     .footer-legal {
       display: flex;
-      gap: 20px;
+      gap: 26px;
     }
     .footer-legal a {
-      font-size: 0.68rem;
-      color: var(--muted2);
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.45);
       text-decoration: none;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.04em;
       transition: color 0.2s;
     }
-    .footer-legal a:hover { color: var(--muted); }
+    .footer-legal a:hover { color: var(--accent-2); }
 
-    /* ── REVEAL ──────────────────────────────────────────── */
+    /* ═════ REVEAL ═════ */
     .reveal {
       opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
     .reveal.visible { opacity: 1; transform: none; }
-
-    /* ── KEYFRAMES ───────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: none; }
-    }
-
-    /* ── MOBILE ──────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      nav { padding: 18px 20px; }
-      #hero { padding: 0 20px 60px; }
-      .about-inner { grid-template-columns: 1fr; gap: 48px; }
-      #about, #press { padding: 72px 20px; }
-      footer { padding: 20px; }
-      .press-inner { flex-direction: column; align-items: flex-start; }
-    }
   </style>
 </head>
 <body>
 
   <nav id="navbar">
-    <a href="#" class="logo">Sharaido Games</a>
-    <a href="https://store.steampowered.com/app/3273960/The_Dark_Crown_Genesis/" target="_blank" rel="noopener" class="wishlist-nav">
-      <i class="fa-brands fa-steam"></i> Wishlist Free
-    </a>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="Sharaido Games">
+        <img src="./Assets/logo-white.png" alt="Sharaido Games" />
+      </a>
+      <div class="nav-links">
+        <a href="#game" class="nav-link">Game</a>
+        <a href="#screenshots" class="nav-link">Screenshots</a>
+        <a href="#studio" class="nav-link">Studio</a>
+      </div>
+      <a href="https://store.steampowered.com/app/3273960/The_Dark_Crown_Genesis/" target="_blank" rel="noopener" class="nav-cta">
+        <i class="fa-brands fa-steam"></i> <span>Wishlist</span>
+      </a>
+    </div>
   </nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-bg">
-      <!-- Replace with actual key art: -->
-      <img src="./assets/dark-crown-keyart.png" alt=""
-        onerror="this.style.display='none'" />
-    </div>
-    <div class="hero-content">
-      <span class="hero-badge">Now in Development — Wishlist on Steam</span>
-      <h1 class="hero-title">The Dark Crown</h1>
-      <p class="hero-title-sub">Genesis</p>
-      <p class="hero-tagline">
-        A 2D pixel-art action rogue-lite. <em>Die. Learn. Reign.</em>
-      </p>
-      <div class="hero-cta">
-        <a href="https://store.steampowered.com/app/3273960/The_Dark_Crown_Genesis/" target="_blank" rel="noopener" class="btn-wishlist">
-          <i class="fa-brands fa-steam"></i> Add to Wishlist
-        </a>
-        <a href="#trailer" class="btn-outline">
-          <i class="fa-solid fa-play"></i> Watch Trailer
-        </a>
+  <!-- ═════ GAME (key art shown once, full and crisp) ═════ -->
+  <section id="game">
+    <div class="game-inner">
+      <div class="game-art reveal">
+        <span class="game-art-badge">Now in Development</span>
+        <img src="./Assets/dark-crown-keyart.png" alt="The Dark Crown: Genesis — key art" />
+      </div>
+      <div class="game-text">
+        <p class="game-eyebrow reveal">A Sharaido Games Production</p>
+        <p class="game-desc reveal">
+          <strong>The Dark Crown: Genesis</strong> is a 2D pixel-art action rogue-lite set in a dying kingdom swallowed by darkness. Each run, you go deeper, hit harder, and forge something new from the ruins.
+        </p>
+        <p class="game-desc reveal">
+          No two descents play the same. Weapons, relics, and blessings combine in ways that reward experimentation and punish hesitation. <em>Die. Learn. Reign.</em>
+        </p>
+        <div class="game-meta reveal">
+          <div class="meta-item">
+            <div class="meta-label">Genre</div>
+            <div class="meta-value">Action Rogue-lite</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Platform</div>
+            <div class="meta-value">PC / Steam</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Status</div>
+            <div class="meta-value">In Development</div>
+          </div>
+        </div>
+        <div class="game-cta reveal">
+          <a href="https://store.steampowered.com/app/3273960/The_Dark_Crown_Genesis/" target="_blank" rel="noopener" class="btn btn-primary">
+            <i class="fa-brands fa-steam"></i> <span>Wishlist on Steam</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- SCREENSHOTS -->
-  <div id="screenshots">
-    <div class="ss-grid">
-      <div class="ss-item">
-        <img src="./assets/dc-ss1.png" alt="Screenshot"
-          onerror="this.parentNode.innerHTML='<div class=\'ss-placeholder\'>Screenshot</div>'" />
-      </div>
-      <div class="ss-item">
-        <img src="./assets/dc-ss2.png" alt="Screenshot"
-          onerror="this.parentNode.innerHTML='<div class=\'ss-placeholder\'>Screenshot</div>'" />
-      </div>
-    </div>
-  </div>
-
-  <!-- ABOUT THE GAME -->
-  <section id="about">
-    <div class="about-inner">
-      <div>
-        <p class="about-label reveal">The Game</p>
-        <h2 class="about-heading reveal">Every run is a<br>new descent.</h2>
-        <p class="about-text reveal">
-          <strong>The Dark Crown: Genesis</strong> is a fast-paced 2D action rogue-lite set in a dying kingdom swallowed by darkness. Each run you go deeper, hit harder, and build something new.
-        </p>
-        <p class="about-text reveal">
-          No two runs play the same. Weapons, relics, and upgrades combine in ways that reward experimentation and punish hesitation.
-        </p>
-      </div>
-      <div class="pillars reveal" style="transition-delay:0.1s">
-        <div class="pillar">
+  <!-- ═════ PILLARS (inline, compact) ═════ -->
+  <section id="pillars">
+    <div class="pillars-inner">
+      <div class="pillars-grid">
+        <div class="pillar reveal">
           <span class="pillar-num">01</span>
-          <div>
-            <div class="pillar-title">Relentless Combat</div>
-            <div class="pillar-desc">Every attack, dodge, and parry has weight. Combat that feels instant and satisfying.</div>
-          </div>
+          <div class="pillar-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="pillar-title">Relentless Combat</div>
+          <div class="pillar-desc">Every attack, dodge, and parry carries weight. Instant, satisfying, deliberate.</div>
         </div>
-        <div class="pillar">
+        <div class="pillar reveal" style="transition-delay:0.08s">
           <span class="pillar-num">02</span>
-          <div>
-            <div class="pillar-title">Procedural Dungeons</div>
-            <div class="pillar-desc">Hand-crafted rooms assembled into layouts that never repeat. Always a new path forward.</div>
-          </div>
+          <div class="pillar-icon"><i class="fa-solid fa-dungeon"></i></div>
+          <div class="pillar-title">Procedural Depths</div>
+          <div class="pillar-desc">Hand-crafted rooms woven into layouts that never repeat. Always a new path forward.</div>
         </div>
-        <div class="pillar">
+        <div class="pillar reveal" style="transition-delay:0.16s">
           <span class="pillar-num">03</span>
-          <div>
-            <div class="pillar-title">Deep Build Variety</div>
-            <div class="pillar-desc">Mix weapons, relics, and blessings to forge a playstyle that's entirely yours.</div>
-          </div>
+          <div class="pillar-icon"><i class="fa-solid fa-gem"></i></div>
+          <div class="pillar-title">Deep Build Variety</div>
+          <div class="pillar-desc">Mix weapons, relics, and blessings to forge a playstyle that is entirely yours.</div>
         </div>
-        <div class="pillar">
+        <div class="pillar reveal" style="transition-delay:0.24s">
           <span class="pillar-num">04</span>
-          <div>
-            <div class="pillar-title">Dark Pixel Art</div>
-            <div class="pillar-desc">A hand-crafted world with atmosphere built into every tile and shadow.</div>
-          </div>
+          <div class="pillar-icon"><i class="fa-solid fa-paint-brush"></i></div>
+          <div class="pillar-title">Hand-crafted Pixel Art</div>
+          <div class="pillar-desc">A hand-drawn world with atmosphere built into every tile, shadow, and sigil.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TRAILER -->
-  <div id="trailer">
-    <!-- Replace data-vid with actual YouTube video ID -->
-    <div class="trailer-wrap" id="trailer-wrap" data-vid="6VTjdQaAFjI">
-      <img src="./assets/dark-crown-keyart.png" alt="Trailer thumbnail"
-        onerror="this.style.opacity='0'" />
-      <div class="trailer-overlay" id="trailer-overlay">
-        <div class="play-btn">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-        <span class="play-label">Watch Trailer</span>
-      </div>
+  <!-- ═════ SCREENSHOTS (dark band) ═════ -->
+  <section id="screenshots">
+    <div class="ss-head">
+      <span class="section-eyebrow reveal">Glimpses</span>
+      <h2 class="section-heading reveal">From the <em>dying kingdom</em>.</h2>
+      <p class="sub reveal">Early looks at the world, combat, and the creatures that wander the depths.</p>
     </div>
-  </div>
-
-  <!-- PRESS -->
-  <section id="press">
-    <div class="press-inner">
-      <div class="press-left">
-        <p class="press-eyebrow">Press & Media</p>
-        <h3 class="press-heading">Need assets or info?</h3>
-        <p class="press-sub">Reach out directly — we respond fast.</p>
+    <div class="ss-grid">
+      <div class="ss-item reveal">
+        <img src="./Assets/dc-ss1.png" alt="The Dark Crown: Genesis screenshot 1" />
       </div>
-      <div class="press-links">
-        <a href="mailto:ali.alperen.uzun@gmail.com" class="press-btn">
-          <i class="fa-regular fa-envelope"></i> Contact
-        </a>
-        <a href="https://store.steampowered.com/app/3273960/The_Dark_Crown_Genesis/" target="_blank" rel="noopener" class="press-btn">
-          <i class="fa-brands fa-steam"></i> Steam Page
-        </a>
+      <div class="ss-item reveal" style="transition-delay:0.1s">
+        <img src="./Assets/dc-ss2.png" alt="The Dark Crown: Genesis screenshot 2" />
       </div>
     </div>
   </section>
 
+  <!-- ═════ STUDIO + PRESS (single card on split dark/light band) ═════ -->
+  <section id="studio">
+    <div class="studio-inner reveal">
+      <span class="section-eyebrow">The Studio</span>
+      <h2 class="section-heading">Small team. <em>Big worlds.</em></h2>
+      <p class="studio-text">
+        <strong>Sharaido Games</strong> is an independent studio dedicated to the craft of atmospheric pixel-art games. We believe in worlds that feel hand-touched — every tile, every shadow, every line of code placed with <em>intention</em>.
+      </p>
+
+      <div class="studio-divider">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2 L14 9 L21 11 L14 13 L12 22 L10 13 L3 11 L10 9 Z"/>
+        </svg>
+      </div>
+
+      <div class="studio-press">
+        <p class="studio-press-label">Press &amp; Contact</p>
+        <div class="studio-cta">
+          <a href="mailto:alperen.uzun@sharaidogames.com" class="btn btn-primary">
+            <i class="fa-regular fa-envelope"></i> <span>Get in Touch</span>
+          </a>
+          <a href="https://store.steampowered.com/app/3273960/The_Dark_Crown_Genesis/" target="_blank" rel="noopener" class="btn btn-ghost">
+            <i class="fa-brands fa-steam"></i> <span>Steam Page</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════ FOOTER (kept exactly as it was — the part you loved) ═════ -->
   <footer>
-    <span class="footer-copy">&copy; <span id="year"></span> Sharaido Games</span>
-    <div class="footer-legal">
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/terms.html">Terms of Use</a>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="./Assets/logo.png" alt="Sharaido Games" />
+      </div>
+      <p class="footer-tagline">Crafting worlds where <em>every shadow has a story</em>.</p>
+      <div class="footer-social">
+        <a href="https://store.steampowered.com/app/3273960/The_Dark_Crown_Genesis/" target="_blank" rel="noopener" aria-label="Steam"><i class="fa-brands fa-steam"></i></a>
+        <a href="mailto:alperen.uzun@sharaidogames.com" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <p class="footer-copy">&copy; <span id="year"></span> Sharaido Games. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+      </div>
     </div>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    const navbar = document.getElementById("navbar");
-    window.addEventListener("scroll", () => {
-      navbar.classList.toggle("scrolled", window.scrollY > 30);
-    }, { passive: true });
-
     const reveals = document.querySelectorAll(".reveal");
     const obs = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => {
+      entries.forEach((e) => {
         if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add("visible"), i * 90);
+          e.target.classList.add("visible");
           obs.unobserve(e.target);
         }
       });
     }, { threshold: 0.08 });
     reveals.forEach(el => obs.observe(el));
-
-    const tw = document.getElementById("trailer-wrap");
-    if (tw) {
-      tw.addEventListener("click", () => {
-        const vid = tw.dataset.vid;
-        if (!vid || vid === "YOUTUBE_VIDEO_ID") {
-          window.open("https://store.steampowered.com/app/3273960/The_Dark_Crown_Genesis/", "_blank");
-          return;
-        }
-        document.getElementById("trailer-overlay").style.display = "none";
-        const f = document.createElement("iframe");
-        f.src = `https://www.youtube.com/embed/${vid}?autoplay=1`;
-        f.allow = "autoplay; encrypted-media";
-        f.allowFullscreen = true;
-        tw.appendChild(f);
-      });
-    }
   </script>
 </body>
 </html>

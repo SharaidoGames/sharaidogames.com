@@ -10,63 +10,84 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #080606; --surface: #100d0b; --border: rgba(255,220,170,0.08);
-      --red: #c0392b; --gold: #c9a84c; --text: #f0e6d3; --muted: #7a6e63; --muted2: #4a4038;
+      --bg: #faf8ff; --surface: #ffffff; --border: #e8e3f0;
+      --primary: #6d28d9; --accent: #8b5cf6; --accent-2: #a78bfa;
+      --ink: #1a1530; --ink-soft: #3a3458; --muted: #6b6585; --muted2: #9b95b3;
       --display: 'Cinzel', serif; --body: 'DM Sans', sans-serif;
     }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--body); font-weight: 300; line-height: 1.75; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--body); font-weight: 400; line-height: 1.75; -webkit-font-smoothing: antialiased; }
 
     nav {
-      padding: 20px 44px;
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
+      background: linear-gradient(90deg, #3730a3 0%, #4f46e5 35%, #6d28d9 75%, #7c3aed 100%);
+      box-shadow: 0 4px 24px -8px rgba(67,56,202,0.45);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: relative;
     }
-    .logo { font-family: var(--display); font-size: 0.78rem; font-weight: 700; color: var(--muted); text-decoration: none; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.2s; }
-    .logo:hover { color: var(--text); }
-    .back-link { font-size: 0.72rem; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
-    .back-link:hover { color: var(--text); }
+    nav::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.10) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .nav-inner {
+      max-width: 1080px; margin: 0 auto;
+      padding: 14px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 1;
+    }
+    .logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; transition: filter 0.3s, transform 0.3s; }
+    .logo:hover { transform: translateY(-1px); filter: drop-shadow(0 0 14px rgba(255,255,255,0.4)); }
+    .logo img { height: 38px; width: auto; display: block; }
+    .back-link {
+      font-size: 0.72rem; color: rgba(255,255,255,0.85); text-decoration: none;
+      letter-spacing: 0.18em; font-weight: 600; text-transform: uppercase;
+      padding: 9px 18px; border: 1px solid rgba(255,255,255,0.35); border-radius: 0;
+      transition: all 0.2s;
+    }
+    .back-link:hover { color: var(--primary); background: #fff; border-color: #fff; }
 
     .doc-wrap {
       max-width: 740px;
       margin: 0 auto;
-      padding: 72px 44px 100px;
+      padding: 72px 32px 100px;
     }
 
     .doc-eyebrow {
-      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 16px;
+      font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 16px; font-weight: 600;
     }
     h1 {
-      font-family: var(--display); font-size: 2.2rem; font-weight: 700;
-      color: var(--text); line-height: 1.1; margin-bottom: 10px;
+      font-family: var(--display); font-size: 2.4rem; font-weight: 900;
+      color: var(--ink); line-height: 1.05; margin-bottom: 10px;
     }
     .doc-meta {
-      font-size: 0.78rem; color: var(--muted); margin-bottom: 56px;
+      font-size: 0.84rem; color: var(--muted); margin-bottom: 56px;
       padding-bottom: 32px; border-bottom: 1px solid var(--border);
     }
 
     h2 {
-      font-family: var(--display); font-size: 1rem; font-weight: 700;
-      color: var(--text); letter-spacing: 0.06em; margin: 44px 0 14px;
+      font-family: var(--display); font-size: 1.1rem; font-weight: 700;
+      color: var(--ink); letter-spacing: 0.04em; margin: 44px 0 14px;
       text-transform: uppercase;
     }
-    p { font-size: 0.93rem; color: var(--muted); margin-bottom: 14px; line-height: 1.85; }
-    p strong { color: var(--text); font-weight: 400; }
+    p { font-size: 0.96rem; color: var(--ink-soft); margin-bottom: 14px; line-height: 1.85; }
+    p strong { color: var(--ink); font-weight: 600; }
     ul { margin: 0 0 14px 20px; }
-    li { font-size: 0.93rem; color: var(--muted); line-height: 1.85; margin-bottom: 6px; }
-    a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); transition: border-color 0.2s; }
-    a:hover { border-color: var(--gold); }
+    li { font-size: 0.96rem; color: var(--ink-soft); line-height: 1.85; margin-bottom: 6px; }
+    a { color: var(--primary); text-decoration: none; border-bottom: 1px solid rgba(109,40,217,0.3); transition: border-color 0.2s, color 0.2s; }
+    a:hover { color: var(--accent); border-color: var(--accent); }
 
     footer {
-      border-top: 1px solid var(--border); padding: 24px 44px;
+      border-top: 1px solid var(--border); padding: 32px;
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+      max-width: 1080px; margin: 0 auto; background: var(--surface);
     }
-    .footer-copy { font-size: 0.68rem; color: var(--muted2); letter-spacing: 0.08em; }
-    .footer-nav { display: flex; gap: 20px; }
-    .footer-nav a { font-size: 0.68rem; color: var(--muted2); text-decoration: none; border: none; letter-spacing: 0.08em; transition: color 0.2s; }
-    .footer-nav a:hover { color: var(--muted); }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.02em; }
+    .footer-nav { display: flex; gap: 24px; }
+    .footer-nav a { font-size: 0.78rem; color: var(--ink-soft); text-decoration: none; border: none; letter-spacing: 0.02em; font-weight: 500; transition: color 0.2s; }
+    .footer-nav a:hover { color: var(--primary); }
 
     @media (max-width: 600px) {
       .doc-wrap { padding: 48px 20px 72px; }
@@ -76,8 +97,12 @@
 </head>
 <body>
   <nav>
-    <a href="/" class="logo">Sharaido Games</a>
-    <a href="/" class="back-link">← Back</a>
+    <div class="nav-inner">
+      <a href="/" class="logo" aria-label="Sharaido Games">
+        <img src="./Assets/logo-white.png" alt="Sharaido Games" />
+      </a>
+      <a href="/" class="back-link">← Back</a>
+    </div>
   </nav>
 
   <div class="doc-wrap">
